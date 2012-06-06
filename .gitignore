@@ -1,0 +1,4 @@
+*.o
+*.exe
+main.s
+strasm.s
