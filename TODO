@@ -1,0 +1,10 @@
+strrchr
+strpbrk
+
+strstr
+strnstr
+
+strcasestr
+
+strcasecmp
+strncasecmp
