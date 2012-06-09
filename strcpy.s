@@ -17,4 +17,3 @@ endstrcpyasm :
   popl %eax
   leave
   ret
-
