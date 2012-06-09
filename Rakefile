@@ -1,7 +1,7 @@
 CC     = 'gcc'
 CFLAGS = '-std=c99 -pedantic -Wall -Wextra -Wmissing-prototypes -Wunreachable-code'
 EXEC   = 'test.exe'
-ARCH   = '-arch i386'
+ARCH   = (RUBY_PLATFORM =~ /darwin/i) ? '-arch i386' : ''
 
 OBJS  = (Dir['*.s']|Dir['*.c']).map{|e| e.gsub /\.\w$/, '.o'}.uniq
 OBJS.delete 'main.o'
