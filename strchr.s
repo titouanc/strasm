@@ -3,7 +3,7 @@ _strchrasm :
   pushl %ebp 
   movl %esp, %ebp
   movl 8(%ebp), %esi
-  movb 9(%ebp), %dl
+  movb 12(%ebp), %dl
   movl $0, %eax
   
 loopstrchrasm:

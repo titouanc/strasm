@@ -6,3 +6,12 @@ salade
 animal
 entier
 crabe
+canneberge
+Vie
+Carotte
+cribler
+disproportionne
+Asperge
+boulot
+metro
+dodo

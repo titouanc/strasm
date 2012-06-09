@@ -1,4 +1,4 @@
-CC     = 'gcc -g'
+CC     = 'gcc'
 CFLAGS = '-std=c99 -pedantic -Wall -Wextra -Wmissing-prototypes -Wunreachable-code'
 EXEC   = 'test.exe'
 ARCH   = '-arch i386'

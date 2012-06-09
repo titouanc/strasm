@@ -1,29 +1,15 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #include "strasm.h"
 
-const char *hello = "Hello";
-const char *world = "World !";
-
 int main(int argc, const char **argv){
-  char str[20] = {'\0'};
-  char *c, l='l';
+  const char *haystack = "Je suis une chaine de caracteres";
+  const char *needle   = "chaine";
+  char *found = strstrasm(haystack, needle);
   
-  printf("strlenasm(%s) = %u\n", hello, strlenasm(hello));
-  
-  strcpyasm(str, hello);
-  printf("Copy: %s\n", str);
-  
-  strcatasm(str, " ");
-  strncatasm(str, world, 5);
-  puts(str);
-  
-  printf("\"%s\" <=> \"%s\": %d\n", hello, str, strcmpasm(hello, str));
-
-  c = strchrasm(hello, l);
-  if (c)
-    printf("%s has %c\n", hello, *c);
-  else
-    printf("%s hasn't %c\n", hello, l);
+  if (found) printf("Found \033[1m\"%s\"\033[0m in \033[1m\"%s\"\033[0m => \"%s\"\n", needle, haystack, found);
+  else printf("Didn't find \033[1m\"%s\"\033[0m in \033[1m\"%s\"\033[0m\n", needle, haystack);
   
   return 0;
 }

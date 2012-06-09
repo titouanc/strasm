@@ -21,6 +21,12 @@ extern int strcmpasm(const char *s1, const char *s2);
 
 extern int strncmpasm(const char *s1, const char *s2, unsigned int n);
 
-extern char *strchrasm(const char *str, char car);
+extern char *strchrasm(const char *haystack, char needle);
+
+extern char *strrchrasm(const char *haystack, char needle);
+
+extern char *strpbrkasm(const char *haystack, const char *needles);
+
+extern char *strstrasm(const char *haystack, const char *needle);
 
 #endif

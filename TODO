@@ -1,7 +1,3 @@
-strrchr
-strpbrk
-
-strstr
 strnstr
 
 strcasestr
