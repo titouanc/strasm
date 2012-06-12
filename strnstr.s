@@ -11,31 +11,44 @@ _strnstrasm:
   movl 16(%ebp), %ecx /* ECX: n */
   movl $0, (%esp)     /* found = NULL */
   
+  cmpb $0, (%edi) /* needle est vide */
+  jne L1
+  movl %esi, %eax
+  jmp endstrnstrasm
+  
 L1:
+  jecxz endstrnstrasm /* n atteint */
   movb (%esi), %dl
   cmpb $0, %dl /* End of haystack */
   je endstrnstrasm
   cmpb %dl, (%edi)
   je L2
-  inc %esi
-  loop L1
-  jmp endstrnstrasm
+  incl %esi
+  decl %ecx
+  jmp L1
   
 L2:
   movl %esi, (%esp)
 L3:
   inc %edi
   inc %esi
-  movb (%edi), %dl
-  cmpb %dl, (%esi)
+  cmpb $0, (%edi)
+  je endstrnstrasm /* fin de needle trouvee */
+  jecxz L5         /* n atteint */
+  movb (%esi), %dl
+  cmpb %dl, (%edi)
   jne L4
-  cmpb $0, %dl
-  je endstrnstrasm
   loop L3
 
 L4:
   movl $0, (%esp)
+  movl 12(%ebp), %edi
   loop L1
+  
+L5:
+  cmpb $0, 1(%edi)
+  je endstrnstrasm
+  movl $0, (%esp)
   
 endstrnstrasm :
   movl (%esp), %eax
