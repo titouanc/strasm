@@ -1,5 +1,3 @@
-strnstr
-
 strcasestr
 
 strcasecmp

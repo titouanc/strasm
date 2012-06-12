@@ -29,4 +29,6 @@ extern char *strpbrkasm(const char *haystack, const char *needles);
 
 extern char *strstrasm(const char *haystack, const char *needle);
 
+extern char *strnstrasm(const char *haystack, const char *needle, unsigned int n);
+
 #endif

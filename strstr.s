@@ -1,38 +1,46 @@
-/* char *strstrsasm(const char *haystack, cons char *needle); */
+/* char *strstrasm(const char *haystack, const char *needle); */
 
 .globl _strstrasm
 _strstrasm :
   pushl %ebp
   movl %esp, %ebp
+  subl $4, %esp
   movl 8(%ebp),  %esi /* ESI pointe vers haystack */
-
-strstrasmResetPrelude:
   movl 12(%ebp), %edi /* EDI pointe vers needle */
-  movl $0, %eax       /* EAX pointe vers le resultat (NULL) */
+  movl $0,  (%esp)    /* found */
   
-/* trouve le premier caractere de needle dans haystack */
-findfirstchar:
-  movb (%esi), %dl
-  cmpb $0, %dl
-  je endstrstrasm
-  cmpb %dl, (%edi)
-  je findnextchars
-  inc %esi
-  jmp findfirstchar
+  cmpb $0, (%edi)
+  jne L1
+  movl %esi, (%esp)   /* needle est vide, on renvoie haystack */
+  jmp endstrstrasm
 
-/* verifie que les caracteres suivant de needle sont presents */
-findnextchars:
-  movl %esi, %eax
-loopfindnextchars:
+L1:
+  movb (%esi), %al
+  cmpb $0, %al
+  je endstrstrasm
+  cmpb %al, (%edi)
+  je L2
+  inc %esi
+  jmp L1
+
+L2:
+  movl %esi, (%esp)
+L3:
   inc %esi
   inc %edi
-  cmpb $0, (%edi)
+  cmpb $0, (%edi) /* fin de needle */
   je endstrstrasm
-  movb (%esi), %bl
-  cmpb (%edi), %bl
-  jne strstrasmResetPrelude
-  jmp loopfindnextchars
+  movb (%esi), %al
+  cmpb %al, (%edi)
+  je L3
+  movl (%esp), %esi /* needle n'est pas en entier dans haystack */
+  movl $0, (%esp)   
+  inc %esi  
+  movl 12(%ebp), %edi /* reinitialisation du pointeur de needle */
+  jmp L1
   
-endstrstrasm:
-  leave
+endstrstrasm :
+  movl (%esp), %eax
+  movl %ebp, %esp
+  popl %ebp
   ret
