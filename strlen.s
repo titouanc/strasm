@@ -2,14 +2,19 @@
 _strlenasm   : 
   pushl %ebp
   movl %esp, %ebp
+  
+  pushl %esi
   movl 8(%ebp), %esi
   movl $0, %eax
+  
 lencountbytes: 
-  cmpb $0, (%esi)
+  cmpb $0, (%eax, %esi)
   je endstrlenasm
-  inc %esi
   inc %eax
   jmp lencountbytes
+  
 endstrlenasm : 
-  leave 
+  popl %esi
+  movl %ebp, %esp
+  popl %ebp 
   ret

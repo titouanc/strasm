@@ -1,19 +1,29 @@
+/* char *strcpyasm(char *dest, const char *src) */
+
 .globl _strcpyasm
 _strcpyasm :
   pushl %ebp
-  movl %esp, %ebp
-  movl 8(%ebp),  %edi
-  movl 12(%ebp), %esi
-  pushl %edi
-cpycopybytes : 
-  movb (%esi), %dl
-  movb %dl, (%edi)
-  cmpb $0, %dl
-  je endstrcpyasm
+  movl %esp, %ebp /* Local stack initialisation */
+  
+  pushl %esi      /* Keep EDI on the stack */
+  pushl %edi      /* Keep ESI on the stack */
+  
+  movl 8(%ebp),  %edi /* EDI contains now dest */
+  movl 12(%ebp), %esi /* ESI contains now source */
+  
+copyloop : 
+  movb (%esi), %al
+  movb %al, (%edi)
+  cmpb $0, %al
+  je strcpyret
   inc %esi
   inc %edi
-  jmp cpycopybytes
-endstrcpyasm : 
-  popl %eax
-  leave
+  jmp copyloop
+  
+strcpyret : 
+  popl %edi  /* Restore ESI and EDI*/
+  popl %esi
+  movl 8(%ebp), %eax /* Return dest */
+  movl %ebp, %esp
+  popl %ebp
   ret
