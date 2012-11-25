@@ -5,8 +5,10 @@
 _strrchrasm:
   pushl %ebp 
   movl %esp, %ebp
+  pushl %esi
+  pushl %edx
   movl 8(%ebp), %esi /* ESI contient haystack */
-  movb 12(%ebp), %dl /* BL contient needle */
+  movb 12(%ebp), %dl /* DL contient needle */
   movl $0, %eax      /* EAX contient l'adresse du resultat (NULL) */
 
 loopstrrchrasm:
@@ -20,5 +22,7 @@ endloopstrrchrasm:
   jne loopstrrchrasm
   
 endstrrchrasm:
+  popl %edx
+  popl %esi
   leave
   ret

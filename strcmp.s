@@ -2,9 +2,14 @@
 _strcmpasm : 
   pushl %ebp
   movl %esp, %ebp
+  pushl %edi
+  pushl %esi
+  pushl %edx
+  
   movl 8(%ebp),  %edi
   movl 12(%ebp), %esi
   movl $0, %eax
+  
 cmploop : 
   movb (%esi), %dl
   cmpb %dl, (%edi)
@@ -15,7 +20,11 @@ cmploop :
   cmpb $0, %dl
   je endstrcmpasm
   jmp cmploop 
-endstrcmpasm : 
+  
+endstrcmpasm :
+  popl %edx /* Restore registers */
+  popl %esi
+  popl %edi
   leave
   ret
                

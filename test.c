@@ -1,37 +1,54 @@
-#include <stdio.h>
 #include "strasm.h"
-#include <string.h>
-#include <stdarg.h>
+#include "test.h"
 
-#define TEST(expr) \
-printf("%10s:%3d\033[1m TEST\033[0m %60s: %s\033[0m\n",\
-__FILE__, __LINE__, #expr, (expr) ? "\033[32mpass" : "\033[31mfail")
+#include <string.h>
+
 #define STRSIZE 40
 
-static const char *hello = "Hello ";
-static const char *world = "world !";
-static const char *animals = "Pig, Duck, Horse, Turtle, Bear";
-static const char *sentence = "Yesterday, James went to the pub riding a horse.";
+static const char *hello    = "Hello ";
+static const char *world    = "world !";
+static const char *animals  = "Pig, Duck, Horse, Turtle, Bear";
 
 int main(int argc, const char **argv){
   char str[STRSIZE];
+  
   memset(str, 0, STRSIZE);
   
-  /* Verification de strlen <=> strlenasm */
-  TEST(strlenasm(sentence) == strlen(sentence));
+  BITEST(strlenasm(str), 0);
+  BITEST(strlenasm(animals), strlen(animals));
   
   /* Verification de strcpyasm */
   strcpyasm(str, hello);
-  TEST(strlenasm(str) == strlenasm(hello));
+  BITEST(strlenasm(str), strlenasm(hello));
   
-  TEST(strcmp(str, hello) == strcmpasm(str, hello));
+  BITEST(strcmp(str, hello), strcmpasm(str, hello));
+  BITEST(strcmpasm(str, hello), strcmp(str, hello));
   
   strcatasm(str, world);
-  TEST(strlenasm(str) == strlenasm(hello)+strlenasm(world));
+  BITEST(strlenasm(str), strlenasm(hello)+strlenasm(world));
   
-  TEST(strstrasm(str, world) == strstr(str, world));
-  TEST(strstrasm(str, "haha") == strstr(str, "haha"));
-  TEST(strstrasm(str, "") == strstr(str, ""));
+  BITEST(strstrasm(str, world), strstr(str, world));
+  BITEST(strstrasm(str, "haha"), strstr(str, "haha"));
+  BITEST(strstrasm(str, ""), strstr(str, ""));
+  
+  BITEST(strchrasm(animals, 'D'), strchr(animals, 'D'));
+  BITEST(strchrasm(animals, 'D'), strstrasm(animals, "Duck"));
+  BITEST(strchrasm(animals, 'D'), strstr(animals, "Duck"));
+  BITEST(strchrasm(animals, 'X'), NULL);
+  
+  BITEST(strrchrasm(animals, 'T'), strrchr(animals, 'T'));
+  BITEST(strrchrasm(animals, 'T'), strstrasm(animals, "Turtle"));
+  BITEST(strrchrasm(animals, 'X'), NULL);
+  
+  BITEST(strnstrasm(animals, "Duck", 3), strnstr(animals, "Duck", 3));
+  
+  BITEST(strpbrkasm(animals, world), strpbrk(animals, world));
+  
+  memset(str, 0, STRSIZE);
+  BITEST(strlenasm(str), 0);
+  
+  strncpyasm(str, animals, 10);
+  BITEST(strlenasm(str), 10);
   
   return 0;
 }

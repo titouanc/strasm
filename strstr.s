@@ -4,6 +4,8 @@
 _strstrasm :
   pushl %ebp
   movl %esp, %ebp
+  pushl %edi
+  pushl %esi
   subl $4, %esp
   movl 8(%ebp),  %esi /* ESI pointe vers haystack */
   movl 12(%ebp), %edi /* EDI pointe vers needle */
@@ -41,6 +43,9 @@ L3:
   
 endstrstrasm :
   movl (%esp), %eax
+  addl $4, %esp
+  popl %esi
+  popl %edi
   movl %ebp, %esp
   popl %ebp
   ret

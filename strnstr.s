@@ -4,6 +4,9 @@
 _strnstrasm:
   pushl %ebp
   movl %esp, %ebp
+  pushl %esi
+  pushl %edi
+  pushl %ecx
   subl $4, %esp /* found */
   
   movl 8(%ebp) , %esi /* ESI: haystack */
@@ -52,6 +55,10 @@ L5:
   
 endstrnstrasm :
   movl (%esp), %eax
+  addl $4, %esp
+  popl %ecx
+  popl %edi
+  popl %esi
   movl %ebp, %esp
   popl %ebp
   ret

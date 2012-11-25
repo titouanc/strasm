@@ -2,3 +2,4 @@
 *.exe
 main.s
 strasm.s
+test
