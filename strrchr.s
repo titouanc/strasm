@@ -1,8 +1,13 @@
 /* char *strrchr(const char *haystack, char needle) */
 /* Algo: retenir la position du dernier char trouve */
 
+#if (defined(__MACH__) && defined(__APPLE__))
 .globl _strrchrasm
-_strrchrasm:
+_strrchrasm   : 
+#else 
+.globl strrchrasm
+strrchrasm   :
+#endif
   pushl %ebp 
   movl %esp, %ebp
   pushl %esi

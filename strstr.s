@@ -1,7 +1,12 @@
 /* char *strstrasm(const char *haystack, const char *needle); */
 
+#if (defined(__MACH__) && defined(__APPLE__))
 .globl _strstrasm
-_strstrasm :
+_strstrasm   : 
+#else 
+.globl strstrasm
+strstrasm   :
+#endif
   pushl %ebp
   movl %esp, %ebp
   pushl %edi

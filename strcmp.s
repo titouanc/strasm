@@ -1,5 +1,10 @@
+#if (defined(__MACH__) && defined(__APPLE__))
 .globl _strcmpasm
-_strcmpasm : 
+_strcmpasm   : 
+#else 
+.globl strcmpasm
+strcmpasm   :
+#endif
   pushl %ebp
   movl %esp, %ebp
   pushl %edi

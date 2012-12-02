@@ -1,5 +1,10 @@
+#if (defined(__MACH__) && defined(__APPLE__))
 .globl _strncpyasm
 _strncpyasm   : 
+#else 
+.globl strncpyasm
+strncpyasm   :
+#endif 
   pushl %ebp
   movl %esp, %ebp
   movl 8(%ebp),  %edi

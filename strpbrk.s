@@ -1,6 +1,11 @@
 /* char *strpbrk(const char *haystack, const char *needles) */
+#if (defined(__MACH__) && defined(__APPLE__))
 .globl _strpbrkasm
-_strpbrkasm : 
+_strpbrkasm   : 
+#else 
+.globl strpbrkasm
+strpbrkasm   :
+#endif
   pushl %ebp 
   movl  %esp, %ebp
   pushl %esi /* Save registers state */

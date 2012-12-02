@@ -1,5 +1,10 @@
+#if (defined(__MACH__) && defined(__APPLE__))
 .globl _strchrasm
-_strchrasm : 
+_strchrasm   : 
+#else 
+.globl strchrasm
+strchrasm   :
+#endif
   pushl %ebp 
   movl %esp, %ebp
   movl 8(%ebp), %esi
