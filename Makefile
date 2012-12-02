@@ -21,7 +21,7 @@ clobber : clean
 %.s : %.c
 	${CC} ${CFLAGS} -S -o $@ $<
 
-${EXEC} : test.o ${OBJS}
+% : %.o ${OBJS}
 	${CC} -o $@ $^
 
 test.o : test.h

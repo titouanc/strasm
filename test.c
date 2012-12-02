@@ -8,6 +8,7 @@
 static const char *hello    = "Hello ";
 static const char *world    = "world !";
 static const char *animals  = "Pig, Duck, Horse, Turtle, Bear";
+static const char *zx       = "zx";
 
 int main(int argc, const char **argv){
   char str[STRSIZE];
@@ -43,12 +44,17 @@ int main(int argc, const char **argv){
   BITEST(strnstrasm(animals, "Duck", 3), strnstr(animals, "Duck", 3));
   
   BITEST(strpbrkasm(animals, world), strpbrk(animals, world));
+  BITEST(strpbrkasm(animals, zx), strpbrk(animals, zx));
+  BITEST(strpbrkasm(animals, ""), strpbrk(animals, ""));
   
   memset(str, 0, STRSIZE);
   BITEST(strlenasm(str), 0);
   
   strncpyasm(str, animals, 10);
   BITEST(strlenasm(str), 10);
+  
+  strncat(str, hello, 2);
+  BITEST(strlenasm(str), 12);
   
   return 0;
 }
