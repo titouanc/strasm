@@ -41,7 +41,9 @@ int main(int argc, const char **argv){
   BITEST(strrchrasm(animals, 'T'), strstrasm(animals, "Turtle"));
   BITEST(strrchrasm(animals, 'X'), NULL);
   
+#if defined(_DARWIN_C_SOURCE)
   BITEST(strnstrasm(animals, "Duck", 3), strnstr(animals, "Duck", 3));
+#endif
   
   BITEST(strpbrkasm(animals, world), strpbrk(animals, world));
   BITEST(strpbrkasm(animals, zx), strpbrk(animals, zx));
