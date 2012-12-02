@@ -1,7 +1,12 @@
 /* char *strnstr(const char *haystack, const char *needle, unsigned int n) */
 
+#if (defined(__MACH__) && defined(__APPLE__))
 .globl _strnstrasm
-_strnstrasm:
+_strnstrasm   : 
+#else 
+.globl strnstrasm
+strnstrasm   :
+#endif
   pushl %ebp
   movl %esp, %ebp
   pushl %esi

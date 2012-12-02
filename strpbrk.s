@@ -1,9 +1,21 @@
 /* char *strpbrk(const char *haystack, const char *needles) */
+#if (defined(__MACH__) && defined(__APPLE__))
 .globl _strpbrkasm
+<<<<<<< HEAD
 _strpbrkasm :
   pushl %ebp
   movl  %esp, %ebp /* local stack init */
   pushl %esi       /* save registers state */
+=======
+_strpbrkasm   : 
+#else 
+.globl strpbrkasm
+strpbrkasm   :
+#endif
+  pushl %ebp 
+  movl  %esp, %ebp
+  pushl %esi /* Save registers state */
+>>>>>>> 58c429c190ae44558f310f191eb0de0c99422b5c
   pushl %edi
   pushl %ebx
   

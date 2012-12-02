@@ -1,7 +1,12 @@
 /* char *strcpyasm(char *dest, const char *src) */
 
+#if (defined(__MACH__) && defined(__APPLE__))
 .globl _strcpyasm
-_strcpyasm :
+_strcpyasm   : 
+#else 
+.globl strcpyasm
+strcpyasm   :
+#endif
   pushl %ebp
   movl %esp, %ebp /* Local stack initialisation */
   

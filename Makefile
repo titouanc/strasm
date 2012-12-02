@@ -7,6 +7,10 @@ ifeq ($(shell uname -s),Darwin)
 	CC += -arch i386
 endif
 
+ifeq ($(shell uname -s),Linux)
+	CC += -m32
+endif
+
 all : ${EXEC}
 
 clean : 

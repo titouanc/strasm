@@ -1,5 +1,11 @@
+#if (defined(__MACH__) && defined(__APPLE__))
 .globl _strcatasm
-_strcatasm   : pushl %ebp
+_strcatasm   : 
+#else 
+.globl strcatasm
+strcatasm   :
+#endif
+               pushl %ebp
                movl %esp, %ebp
                movl 8(%ebp),  %edi
                movl 12(%ebp), %esi
